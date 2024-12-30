@@ -10,14 +10,18 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-image: url('https://cdn.gamma.app/fhpleqvbjim2f32/generated-images/Ilmh4J3LduBF9TcQHX69N.jpg');
+            background-image: url('https://cdn.gamma.app/fhpleqvbjim2f32/2e0dd43a1cac422dba95dbbb19a57d28/original/m5jbKxn54d6Q01a4tMJgN.jpg');
             background-size: cover;
             background-repeat: no-repeat;
             background-attachment: fixed;
             color: #333;
             transition: background-color 0.3s, color 0.3s;
         }
-
+          /* Dark Mode */
+         body.dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
         header {
             background-color: #003366;
             color: #ffd700;
@@ -30,29 +34,36 @@
             transition: background-color 0.3s, color 0.3s;
         }
 
+        .dark-mode header {
+            background-color: #1e1e1e;
+            color: #ffd700;
+        }
+
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
             padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .card {
-            background-color: #002244;
-            border-radius: 10px;
+           background-color: #002244;
+           border-radius: 10px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
-            text-align: center;
-            color: #fff;
-        }
+           transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s, color 0.3s;
+           text-align: center;
+           color: #fff;
+         }
 
         .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            transform: scale(1.03);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            background-color: #003366;
         }
+
 
         .card img {
             width: 100%;
@@ -62,25 +73,28 @@
 
         .card h3 {
             margin: 10px 0;
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: #ffd700;
         }
 
         .card a {
             text-decoration: none;
-            color: #002244;
+             color: #002244;
             font-weight: bold;
-            background-color: #ffd700;
-            padding: 12px 18px;
-            border-radius: 5px;
+             background-color: #ffd700;
+            padding: 10px 15px;
+           border-radius: 5px;
             margin: 10px auto;
             display: inline-block;
-            transition: background-color 0.3s, transform 0.2s;
+           transition: background-color 0.3s, transform 0.2s, color 0.3s;
+            text-transform: uppercase;
+            font-size: 0.9rem;
         }
 
         .card a:hover {
             background-color: #e6c000;
-            transform: scale(1.05);
+            transform: scale(1.02);
+           color: #003366;
         }
 
         .status-badge {
@@ -89,14 +103,14 @@
             font-size: 0.9rem;
             font-weight: bold;
             border-radius: 5px;
-            margin: 5px 0;
+             margin: 5px 0;
         }
 
         .status-select {
             margin-top: 10px;
             font-size: 0.9rem;
-            padding: 5px;
-            border-radius: 5px;
+           padding: 5px;
+           border-radius: 5px;
         }
 
         .status-badge[data-status="✅ Fertig"] { background-color: #28a745; color: #fff; }
@@ -104,18 +118,7 @@
         .status-badge[data-status="⚠️ Wartung"] { background-color: #dc3545; color: #fff; }
         .status-badge[data-status="🔄 Update benötigt"] { background-color: #17a2b8; color: #fff; }
 
-        /* Dark Mode */
-        .dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-
-        .dark-mode header {
-            background-color: #1e1e1e;
-            color: #ffd700;
-        }
-
-        .dark-mode .card {
+       .dark-mode .card {
             background-color: #282828;
             color: #e0e0e0;
         }
@@ -125,12 +128,12 @@
         }
 
         .dark-mode .card a {
-            background-color: #333333;
-            color: #ffd700;
+           background-color: #333333;
+           color: #ffd700;
         }
 
         .dark-mode .card a:hover {
-            background-color: #444444;
+           background-color: #444444;
         }
     </style>
 </head>
@@ -144,7 +147,7 @@
         { id: 1, title: "MPU PLATFORM WEBSITE", img: "https://i.imgur.com/cVNquR7.jpeg", link: "https://zaha175.github.io/MPU-Plattform-bersicht/", status: "✅ Fertig" },
         { id: 2, title: "MPU PLATFORM ROM", img: "https://i.imgur.com/jnqFj47.jpeg", link: "https://zaha175.github.io/MPUPLATFORMPET/", status: "🛠️ In Arbeit" },
         { id: 3, title: "MPU PLATFORM DE", img: "https://i.imgur.com/cVNquR7.jpeg", link: "https://zaha175.github.io/MPUPLATFORMDE/", status: "⚠️ Wartung" },
-        { id: 4, title: "MPU APP MINCA", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "https://zaha175.github.io/MINCUABUZNOU/", status: "🔄 Update benötigt" },
+        { id: 4, title: "MPU APP MINCA", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "https://zaha175.github.io/MINCUABSTINENZ/", status: "🔄 Update benötigt" },
         { id: 5, title: "MPU APP STEFAN", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "https://zaha175.github.io/STEFANABUZ1/", status: "✅ Fertig" },
         { id: 13, title: "MPU PLATFORM PETRU", img: "https://i.imgur.com/jnqFj47.jpeg", link: "https://zaha175.github.io/MPUPLATFORMPET/", status: "🛠️ In Arbeit" },
         { id: 6, title: "MPU APP PETRU", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "https://zaha175.github.io/ABUZROM/", status: "🛠️ In Arbeit" },
@@ -153,33 +156,37 @@
         { id: 9, title: "MPU APP GHEORGHE", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "#", status: "✅ Fertig" },
         { id: 10, title: "MPU APP LIVIU", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "https://zaha175.github.io/ALLESHINCUALT/", status: "🛠️ In Arbeit" },
         { id: 11, title: "MPU APP", img: "https://i.imgur.com/cVNquR7.jpeg", link: "#", status: "⚠️ Wartung" },
-        { id: 12, title: "MPU APP", img: "https://i.imgur.com/cVNquR7.jpeg", link: "#", status: "🔄 Update benötigt" }
+        { id: 12, title: "MPU APP", img: "https://i.imgur.com/cVNquR7.jpeg", link: "#", status: "🔄 Update benötigt" },
+        { id: 14, title: "MPU APP", img: "https://i.imgur.com/cVNquR7.jpeg", link: "#", status: "⚠️ Wartung" },
+        { id: 15, title: "MPU APP", img: "https://i.imgur.com/cVNquR7.jpeg", link: "#", status: "🔄 Update benötigt" },
+        { id: 16, title: "MPU APP", img: "https://i.imgur.com/cVNquR7.jpeg", link: "#", status: "🔄 Update benötigt" }
     ];
 
     const gallery = document.getElementById('card-gallery');
-
-    // Lade gespeicherte Status aus localStorage
+     // Lade gespeicherte Status aus localStorage
     const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
+
 
     platforms.forEach(platform => {
         const status = savedStatuses[platform.id] || platform.status;
-        const linkText = platform.title.includes("MPU APP") ? "Zur App" : "Zur Plattform"; // Link-Text anpassen
+       const linkText = platform.title.includes("MPU APP") ? "Zur App" : "Zur Plattform";
         const card = document.createElement('div');
         card.className = 'card';
         card.innerHTML = `
             <img src="${platform.img}" alt="${platform.title}">
             <h3>${platform.title}</h3>
             <span class="status-badge" id="status-${platform.id}" data-status="${status}">${status}</span>
-            <a href="${platform.link}" target="_blank">${linkText}</a> <!-- Link-Text dynamisch setzen -->
-            <select class="status-select" onchange="updateStatus(${platform.id}, this.value)">
+            <a href="${platform.link}" target="_blank">${linkText}</a>
+           <select class="status-select" onchange="updateStatus(${platform.id}, this.value)">
                 <option value="✅ Fertig" ${status === '✅ Fertig' ? 'selected' : ''}>✅ Fertig</option>
                 <option value="🛠️ In Arbeit" ${status === '🛠️ In Arbeit' ? 'selected' : ''}>🛠️ In Arbeit</option>
-                <option value="⚠️ Wartung" ${status === '⚠️ Wartung' ? 'selected' : ''}>⚠️ Wartung</option>
+               <option value="⚠️ Wartung" ${status === '⚠️ Wartung' ? 'selected' : ''}>⚠️ Wartung</option>
                 <option value="🔄 Update benötigt" ${status === '🔄 Update benötigt' ? 'selected' : ''}>🔄 Update benötigt</option>
             </select>
         `;
         gallery.appendChild(card);
     });
+
 
     function updateStatus(cardId, newStatus) {
         const statusBadge = document.getElementById(`status-${cardId}`);
@@ -192,9 +199,9 @@
         }
     }
 
-    const toggleDarkMode = () => {
-        document.body.classList.toggle('dark-mode');
-    };
+     const toggleDarkMode = () => {
+      document.body.classList.toggle('dark-mode');
+     };
 </script>
 
 <button onclick="toggleDarkMode()" style="position: fixed; top: 10px; right: 10px; padding: 10px; background-color: #003366; color: #ffd700; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer;">Dark Mode</button>
