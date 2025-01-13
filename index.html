@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,12 +17,15 @@
             background-attachment: fixed;
             color: #333;
             transition: background-color 0.3s, color 0.3s;
+            perspective: 1000px;
         }
-          /* Dark Mode */
-         body.dark-mode {
+
+        /* Dark Mode */
+        body.dark-mode {
             background-color: #121212;
             color: #e0e0e0;
         }
+
         header {
             background-color: #003366;
             color: #ffd700;
@@ -41,85 +45,129 @@
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
             padding: 20px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .card {
-           background-color: #002244;
-           border-radius: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            overflow: hidden;
-           transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background-color 0.3s, color 0.3s;
-           text-align: center;
-           color: #fff;
-         }
-
-        .card:hover {
-            transform: scale(1.03);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            background-color: #003366;
+            width: 150px;
+            height: 150px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55), box-shadow 0.3s ease-in-out, background 0.3s, color 0.3s;
+            cursor: pointer;
+            margin: 0 auto;
         }
 
+        .card:hover {
+            transform: rotateY(180deg) scale(1.05);
+            box-shadow: 8px 8px 15px rgba(0, 0, 0, 0.4),
+                -8px -8px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(145deg, #003366, #002244);
+        }
+
+        .card .face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(145deg, #002244, #001a33);
+            color: #fff;
+            padding: 10px;
+            box-sizing: border-box;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .card .face.front {
+            transform: rotateY(0deg);
+        }
+
+        .card .face.back {
+            transform: rotateY(180deg);
+            background: linear-gradient(145deg, #003366, #002244);
+        }
 
         .card img {
-            width: 100%;
+            width: 80%;
             height: auto;
             display: block;
+            margin: 0 auto 10px;
+            border-bottom: 2px solid #ffd700;
         }
 
         .card h3 {
             margin: 10px 0;
-            font-size: 1.1rem;
+            font-size: 0.9rem;
             color: #ffd700;
         }
 
         .card a {
             text-decoration: none;
-             color: #002244;
+            color: #002244;
             font-weight: bold;
-             background-color: #ffd700;
-            padding: 10px 15px;
-           border-radius: 5px;
-            margin: 10px auto;
+            background-color: #ffd700;
+            padding: 5px 10px;
+            border-radius: 5px;
+            margin: 5px auto;
             display: inline-block;
-           transition: background-color 0.3s, transform 0.2s, color 0.3s;
+            transition: background-color 0.3s, transform 0.2s, color 0.3s;
             text-transform: uppercase;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
         }
 
         .card a:hover {
             background-color: #e6c000;
             transform: scale(1.02);
-           color: #003366;
+            color: #003366;
         }
 
         .status-badge {
             display: inline-block;
-            padding: 5px 10px;
-            font-size: 0.9rem;
+            padding: 3px 8px;
+            font-size: 0.8rem;
             font-weight: bold;
             border-radius: 5px;
-             margin: 5px 0;
+            margin: 5px 0;
         }
 
         .status-select {
-            margin-top: 10px;
-            font-size: 0.9rem;
-           padding: 5px;
-           border-radius: 5px;
+            margin-top: 5px;
+            font-size: 0.8rem;
+            padding: 3px;
+            border-radius: 5px;
         }
 
-        .status-badge[data-status="✅ Fertig"] { background-color: #28a745; color: #fff; }
-        .status-badge[data-status="🛠️ In Arbeit"] { background-color: #ffc107; color: #333; }
-        .status-badge[data-status="⚠️ Wartung"] { background-color: #dc3545; color: #fff; }
-        .status-badge[data-status="🔄 Update benötigt"] { background-color: #17a2b8; color: #fff; }
+        .status-badge[data-status="✅ Fertig"] {
+            background-color: #28a745;
+            color: #fff;
+        }
 
-       .dark-mode .card {
-            background-color: #282828;
+        .status-badge[data-status="🛠️ In Arbeit"] {
+            background-color: #ffc107;
+            color: #333;
+        }
+
+        .status-badge[data-status="⚠️ Wartung"] {
+            background-color: #dc3545;
+            color: #fff;
+        }
+
+        .status-badge[data-status="🔄 Update benötigt"] {
+            background-color: #17a2b8;
+            color: #fff;
+        }
+
+        .dark-mode .card {
+            background: linear-gradient(145deg, #282828, #333333);
             color: #e0e0e0;
         }
 
@@ -128,85 +176,211 @@
         }
 
         .dark-mode .card a {
-           background-color: #333333;
-           color: #ffd700;
+            background-color: #333333;
+            color: #ffd700;
         }
 
         .dark-mode .card a:hover {
-           background-color: #444444;
+            background-color: #444444;
         }
     </style>
 </head>
+
 <body>
 
-<header>KOMMANDO ZENTRALE</header>
-<div class="gallery" id="card-gallery"></div>
+    <header>KOMMANDO ZENTRALE</header>
+    <div class="gallery" id="card-gallery"></div>
 
-<script>
-    const platforms = [
-        { id: 1, title: "MPU PLATFORM WEBSITE", img: "https://i.imgur.com/cVNquR7.jpeg", link: "https://zaha175.github.io/MPU-Plattform-bersicht/", status: "✅ Fertig" },
-        { id: 2, title: "MPU PLATFORM ROM", img: "https://i.imgur.com/jnqFj47.jpeg", link: "https://zaha175.github.io/MPUPLATFORMROM/", status: "🛠️ In Arbeit" },
-        { id: 3, title: "MPU PLATFORM DE", img: "https://i.imgur.com/cVNquR7.jpeg", link: "https://zaha175.github.io/MPUPLATFORMDE/", status: "⚠️ Wartung" },
-        { id: 18, title: "ALTERUNGSSTOPP PLATFORM", img: "https://cdn.gamma.app/fhpleqvbjim2f32/4c9e5c9e8dad48a7b41f44f6982ffb75/original/Screenshot-2025-01-03-213036.jpg", link: "https://zaha175.github.io/ALTERUNGSSTOPPPLATFORM/", status: "⚠️ Wartung" },
-        { id: 4, title: "MPU APP MINCU", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "https://zaha175.github.io/MINCUABSTINENZ/", status: "🔄 Update benötigt" },
-        { id: 17, title: "MPU PLATFORM MINCU", img: "https://i.imgur.com/jnqFj47.jpeg", link: "https://zaha175.github.io/MPUPLATFORMMINCU/", status: "🛠️ In Arbeit" },
-        { id: 5, title: "MPU APP STEFAN", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "https://zaha175.github.io/STEFANABUZ1/", status: "✅ Fertig" },
-        { id: 13, title: "MPU PLATFORM PETRU", img: "https://i.imgur.com/jnqFj47.jpeg", link: "https://zaha175.github.io/MPUPLATFORMPET/", status: "🛠️ In Arbeit" },
-        { id: 6, title: "MPU APP PETRU", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "https://zaha175.github.io/ABUZROM/", status: "🛠️ In Arbeit" },
-        { id: 7, title: "MPU APP COSTINEL", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "https://zaha175.github.io/ABUZCOSTINEL/", status: "⚠️ Wartung" },
-        { id: 19, title: "MPU PLATFORM COSTINEL", img: "https://i.imgur.com/jnqFj47.jpeg", link: "https://zaha175.github.io/MPUPLATFORMCOSTINEL/", status: "🛠️ In Arbeit" },
-        { id: 8, title: "MPU APP FLORIN", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "https://zaha175.github.io/ABUZFLORINROMALT/", status: "🔄 Update benötigt" },
-        { id: 9, title: "MPU APP GHEORGHE", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "#", status: "✅ Fertig" },
-        { id: 10, title: "MPU APP LIVIU", img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg", link: "https://zaha175.github.io/ALLESHINCUALT/", status: "🛠️ In Arbeit" },
-        { id: 11, title: "MPU APP", img: "https://i.imgur.com/cVNquR7.jpeg", link: "#", status: "⚠️ Wartung" },
-        { id: 12, title: "MPU APP", img: "https://i.imgur.com/cVNquR7.jpeg", link: "#", status: "🔄 Update benötigt" },
-        { id: 14, title: "MPU APP", img: "https://i.imgur.com/cVNquR7.jpeg", link: "#", status: "⚠️ Wartung" },
-        { id: 15, title: "MPU APP", img: "https://i.imgur.com/cVNquR7.jpeg", link: "#", status: "🔄 Update benötigt" },
-        { id: 16, title: "MPU APP", img: "https://i.imgur.com/cVNquR7.jpeg", link: "#", status: "🔄 Update benötigt" }
-    ];
+    <script>
+        const platforms = [{
+                id: 1,
+                title: "MPU PLATFORM WEBSITE",
+                img: "https://i.imgur.com/cVNquR7.jpeg",
+                link: "https://zaha175.github.io/MPU-Plattform-bersicht/",
+                status: "✅ Fertig"
+            },
+            {
+                id: 2,
+                title: "MPU PLATFORM ROM",
+                img: "https://i.imgur.com/jnqFj47.jpeg",
+                link: "https://zaha175.github.io/MPUPLATFORMROM/",
+                status: "🛠️ In Arbeit"
+            },
+            {
+                id: 3,
+                title: "MPU PLATFORM DE",
+                img: "https://i.imgur.com/cVNquR7.jpeg",
+                link: "https://zaha175.github.io/MPUPLATFORMDE/",
+                status: "⚠️ Wartung"
+            },
+              {
+                id: 18,
+                title: "ALTERUNGSSTOPP PLATFORM",
+                img: "https://cdn.gamma.app/fhpleqvbjim2f32/4c9e5c9e8dad48a7b41f44f6982ffb75/original/Screenshot-2025-01-03-213036.jpg",
+                link: "https://zaha175.github.io/ALTERUNGSSTOPPPLATFORM/",
+                status: "⚠️ Wartung"
+            },
+            {
+                id: 4,
+                title: "MPU APP MINCU",
+                img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
+                link: "https://zaha175.github.io/MINCUABSTINENZ/",
+                status: "🔄 Update benötigt"
+            },
+             {
+                id: 17,
+                title: "MPU PLATFORM MINCU",
+                img: "https://i.imgur.com/jnqFj47.jpeg",
+                link: "https://zaha175.github.io/MPUPLATFORMMINCU/",
+                status: "🛠️ In Arbeit"
+            },
+            {
+                id: 5,
+                title: "MPU APP STEFAN",
+                img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
+                link: "https://zaha175.github.io/STEFANABUZ1/",
+                status: "✅ Fertig"
+            },
+              {
+                id: 13,
+                title: "MPU PLATFORM PETRU",
+                img: "https://i.imgur.com/jnqFj47.jpeg",
+                link: "https://zaha175.github.io/MPUPLATFORMPET/",
+                status: "🛠️ In Arbeit"
+            },
+            {
+                id: 6,
+                title: "MPU APP PETRU",
+                img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
+                link: "https://zaha175.github.io/ABUZROM/",
+                status: "🛠️ In Arbeit"
+            },
+            {
+                id: 7,
+                title: "MPU APP COSTINEL",
+                img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
+                link: "https://zaha175.github.io/ABUZCOSTINEL/",
+                status: "⚠️ Wartung"
+            },
+              {
+                id: 19,
+                title: "MPU PLATFORM COSTINEL",
+                img: "https://i.imgur.com/jnqFj47.jpeg",
+                link: "https://zaha175.github.io/MPUPLATFORMCOSTINEL/",
+                status: "🛠️ In Arbeit"
+            },
+            {
+                id: 8,
+                title: "MPU APP FLORIN",
+                img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
+                link: "https://zaha175.github.io/ABUZFLORINROMALT/",
+                status: "🔄 Update benötigt"
+            },
+            {
+                id: 9,
+                title: "MPU APP GHEORGHE",
+                img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
+                link: "#",
+                status: "✅ Fertig"
+            },
+            {
+                id: 10,
+                title: "MPU APP LIVIU",
+                img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
+                link: "https://zaha175.github.io/ALLESHINCUALT/",
+                status: "🛠️ In Arbeit"
+            },
+            {
+                id: 11,
+                title: "MPU APP",
+                img: "https://i.imgur.com/cVNquR7.jpeg",
+                link: "#",
+                status: "⚠️ Wartung"
+            },
+            {
+                id: 12,
+                title: "MPU APP",
+                img: "https://i.imgur.com/cVNquR7.jpeg",
+                link: "#",
+                status: "🔄 Update benötigt"
+            },
+               {
+                id: 14,
+                title: "MPU APP",
+                img: "https://i.imgur.com/cVNquR7.jpeg",
+                link: "#",
+                status: "⚠️ Wartung"
+            },
+            {
+                id: 15,
+                title: "MPU APP",
+                img: "https://i.imgur.com/cVNquR7.jpeg",
+                link: "#",
+                status: "🔄 Update benötigt"
+            },
+            {
+                id: 16,
+                title: "MPU APP",
+                img: "https://i.imgur.com/cVNquR7.jpeg",
+                link: "#",
+                status: "🔄 Update benötigt"
+            }
+        ];
 
-    const gallery = document.getElementById('card-gallery');
-     // Lade gespeicherte Status aus localStorage
-    const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
+        const gallery = document.getElementById('card-gallery');
+        // Lade gespeicherte Status aus localStorage
+        const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
 
 
-    platforms.forEach(platform => {
-        const status = savedStatuses[platform.id] || platform.status;
-       const linkText = platform.title.includes("MPU APP") ? "Zur App" : "Zur Plattform";
-        const card = document.createElement('div');
-        card.className = 'card';
-        card.innerHTML = `
-            <img src="${platform.img}" alt="${platform.title}">
-            <h3>${platform.title}</h3>
-            <span class="status-badge" id="status-${platform.id}" data-status="${status}">${status}</span>
-            <a href="${platform.link}" target="_blank">${linkText}</a>
-           <select class="status-select" onchange="updateStatus(${platform.id}, this.value)">
-                <option value="✅ Fertig" ${status === '✅ Fertig' ? 'selected' : ''}>✅ Fertig</option>
-                <option value="🛠️ In Arbeit" ${status === '🛠️ In Arbeit' ? 'selected' : ''}>🛠️ In Arbeit</option>
-               <option value="⚠️ Wartung" ${status === '⚠️ Wartung' ? 'selected' : ''}>⚠️ Wartung</option>
-                <option value="🔄 Update benötigt" ${status === '🔄 Update benötigt' ? 'selected' : ''}>🔄 Update benötigt</option>
-            </select>
+        platforms.forEach(platform => {
+            const status = savedStatuses[platform.id] || platform.status;
+             const linkText = platform.title.includes("MPU APP") ? "Zur App" : "Zur Plattform";
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+            <div class="face front">
+                <img src="${platform.img}" alt="${platform.title}">
+                <h3>${platform.title}</h3>
+            </div>
+            <div class="face back">
+                <span class="status-badge" id="status-${platform.id}" data-status="${status}">${status}</span>
+                <a href="${platform.link}" target="_blank">${linkText}</a>
+                <select class="status-select" onchange="updateStatus(${platform.id}, this.value)">
+                    <option value="✅ Fertig" ${status === '✅ Fertig' ? 'selected' : ''}>✅ Fertig</option>
+                    <option value="🛠️ In Arbeit" ${status === '🛠️ In Arbeit' ? 'selected' : ''}>🛠️ In Arbeit</option>
+                    <option value="⚠️ Wartung" ${status === '⚠️ Wartung' ? 'selected' : ''}>⚠️ Wartung</option>
+                    <option value="🔄 Update benötigt" ${status === '🔄 Update benötigt' ? 'selected' : ''}>🔄 Update benötigt</option>
+                </select>
+            </div>
         `;
-        gallery.appendChild(card);
-    });
+            gallery.appendChild(card);
+
+            // Füge Klick-Eventlistener hinzu
+            card.addEventListener('click', () => {
+                card.style.transform = card.style.transform === "rotateY(180deg)" ? "rotateY(0deg)" : "rotateY(180deg)";
+            });
+        });
 
 
-    function updateStatus(cardId, newStatus) {
-        const statusBadge = document.getElementById(`status-${cardId}`);
-        if (statusBadge) {
-            statusBadge.textContent = newStatus;
-            statusBadge.setAttribute('data-status', newStatus);
-            const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
-            savedStatuses[cardId] = newStatus;
-            localStorage.setItem('platformStatuses', JSON.stringify(savedStatuses));
+        function updateStatus(cardId, newStatus) {
+            const statusBadge = document.getElementById(`status-${cardId}`);
+            if (statusBadge) {
+                statusBadge.textContent = newStatus;
+                statusBadge.setAttribute('data-status', newStatus);
+                const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
+                savedStatuses[cardId] = newStatus;
+                localStorage.setItem('platformStatuses', JSON.stringify(savedStatuses));
+            }
         }
-    }
 
-     const toggleDarkMode = () => {
-      document.body.classList.toggle('dark-mode');
-     };
-</script>
+        const toggleDarkMode = () => {
+            document.body.classList.toggle('dark-mode');
+        };
+    </script>
 
-<button onclick="toggleDarkMode()" style="position: fixed; top: 10px; right: 10px; padding: 10px; background-color: #003366; color: #ffd700; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer;">Dark Mode</button>
+    <button onclick="toggleDarkMode()"
+        style="position: fixed; top: 10px; right: 10px; padding: 10px; background-color: #003366; color: #ffd700; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer;">Dark
+        Mode</button>
 </body>
+
 </html>
