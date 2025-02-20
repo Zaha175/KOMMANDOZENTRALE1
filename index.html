@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>KOMMANDO PLATFORM - 3D Westworld Style</title>
+  <title>KOMMANDO PLATFORM - 3D CUBE Style</title>
   
   <!-- Google Fonts: Orbitron und Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
   
   <style>
-    /* Grundlegende Westworld-Stile */
+    /* Grundlegendes Styling */
     body {
       font-family: 'Orbitron', sans-serif;
       margin: 0;
@@ -19,12 +19,7 @@
       background-repeat: no-repeat;
       background-attachment: fixed;
       color: #00ffff; /* Neon-Cyan */
-      transition: background-color 0.3s, color 0.3s;
-      perspective: 1200px; /* 3D-Effekt verstärken */
-    }
-    body.dark-mode {
-      background-color: #121212;
-      color: #e0e0e0;
+      perspective: 1200px; /* Für 3D-Effekt */
     }
     header {
       background-color: #003366;
@@ -36,93 +31,112 @@
       font-weight: bold;
       letter-spacing: 2px;
       text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
-      transition: background-color 0.3s, color 0.3s;
-    }
-    body.dark-mode header {
-      background-color: #1e1e1e;
-      color: #ffd700;
     }
     
-    /* Galerie / Cards im 3D-Stil */
+    /* Die Gallery: Grid-Layout für unsere Cubes */
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 30px;
       padding: 20px;
-      max-width: 1200px;
+      max-width: 1400px;
       margin: 0 auto;
     }
-    .card {
-      width: 120px;
-      height: 120px;
+
+    /* Jeder Eintrag ist jetzt ein "Cube"-Container */
+    .cube {
+      width: 140px; 
+      height: 140px;
       position: relative;
-      transform-style: preserve-3d;
       margin: 0 auto;
-      border-radius: 10px;
-      transition: transform 0.5s cubic-bezier(0.68,-0.55,0.27,1.55), box-shadow 0.3s, background 0.3s, color 0.3s;
+      transform-style: preserve-3d;  /* 3D-Berechnung aktivieren */
+      transition: transform 1s;
       cursor: pointer;
     }
-    .card:hover {
-      transform: rotateY(180deg) scale(1.06) translateZ(15px);
-      box-shadow: 4px 4px 15px rgba(0,0,0,0.4), -4px -4px 10px rgba(0,0,0,0.2);
+    /* Bei Hover drehen wir den Würfel z.B. um 180 Grad */
+    .cube:hover {
+      transform: rotateY(180deg);
     }
-    .card .face {
+
+    /* Jede Seite des Würfels */
+    .face {
       position: absolute;
-      width: 100%;
-      height: 100%;
-      backface-visibility: hidden;
+      width: 140px;
+      height: 140px;
+      border: 2px solid #ffd700;
       border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      box-sizing: border-box;
       background: linear-gradient(135deg, #002244, #003366);
       color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
       padding: 10px;
-      box-sizing: border-box;
-      transition: background-color 0.3s, color 0.3s;
-      box-shadow: inset 0 0 8px rgba(0,255,255,0.2);
+      font-size: 0.8rem;
+      backface-visibility: hidden; /* Wichtiger Trick, um Rückseiten zu verstecken */
     }
-    .card .face.front {
-      transform: rotateY(0deg);
+
+    /* Front nach vorne verschieben */
+    .front {
+      transform: translateZ(70px); 
     }
-    .card .face.back {
-      transform: rotateY(180deg);
+    /* Back dreht sich um 180°, damit sie „hinten“ ist */
+    .back {
+      transform: rotateY(180deg) translateZ(70px);
       background: linear-gradient(135deg, #003366, #004477);
     }
-    .card img {
-      width: 70%;
+
+    /* Die anderen vier Seiten – hier nur einfache Styles */
+    .right {
+      transform: rotateY(90deg) translateZ(70px);
+    }
+    .left {
+      transform: rotateY(-90deg) translateZ(70px);
+    }
+    .top {
+      transform: rotateX(90deg) translateZ(70px);
+    }
+    .bottom {
+      transform: rotateX(-90deg) translateZ(70px);
+    }
+
+    /* Bild + Titel in der Front */
+    .face img {
+      width: 60%;
       height: auto;
-      display: block;
-      margin: 0 auto 8px;
+      margin-bottom: 8px;
       border-bottom: 2px solid #ffd700;
     }
-    .card h3 {
-      margin: 6px 0 4px;
-      font-size: 0.85rem;
+    .face h3 {
+      margin: 4px 0;
       color: #ffd700;
       text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
+      font-size: 0.9rem;
       text-align: center;
     }
-    .card a {
+
+    /* Link-Button */
+    .face a {
       text-decoration: none;
       color: #002244;
       font-weight: bold;
       background-color: #ffd700;
-      padding: 3px 6px;
+      padding: 4px 8px;
       border-radius: 5px;
-      margin: 4px auto 0;
+      margin: 6px auto 0;
       display: inline-block;
-      transition: background-color 0.3s, transform 0.2s, color 0.3s;
       text-transform: uppercase;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
+      transition: background-color 0.3s, transform 0.2s;
     }
-    .card a:hover {
+    .face a:hover {
       background-color: #e6c000;
-      transform: scale(1.03);
+      transform: scale(1.05);
       color: #003366;
     }
-    
+
+    /* Status-Badge & Select */
     .status-badge {
       display: inline-block;
       padding: 3px 6px;
@@ -131,13 +145,17 @@
       border-radius: 5px;
       margin: 5px 0;
       text-align: center;
+      background-color: #28a745;
+      color: #fff;
     }
     .status-select {
-      margin-top: 4px;
+      margin-top: 6px;
       font-size: 0.75rem;
-      padding: 3px;
+      padding: 4px;
       border-radius: 5px;
     }
+
+    /* Verschiedene Statusfarben */
     .status-badge[data-status="✅ Fertig"] {
       background-color: #28a745;
       color: #fff;
@@ -154,27 +172,8 @@
       background-color: #17a2b8;
       color: #fff;
     }
-    
-    /* Dark-Mode-Anpassungen für Cards */
-    .dark-mode .card .face {
-      background: linear-gradient(135deg, #282828, #333333);
-    }
-    .dark-mode .card .face.back {
-      background: linear-gradient(135deg, #333333, #3a3a3a);
-    }
-    .dark-mode .card h3 {
-      color: #ffd700;
-    }
-    .dark-mode .card a {
-      background-color: #333333;
-      color: #ffd700;
-    }
-    .dark-mode .card a:hover {
-      background-color: #444444;
-      color: #ffd700;
-    }
-    
-    /* Optional: Toggle Dark Mode Button (auch für Kommandozentrale) */
+
+    /* Dark Mode Button (nur Beispiel) */
     .mode-toggle {
       position: fixed;
       top: 10px;
@@ -187,11 +186,6 @@
       font-size: 1rem;
       cursor: pointer;
       z-index: 1000;
-      transition: background-color 0.3s, transform 0.2s;
-    }
-    .mode-toggle:hover {
-      background-color: #002244;
-      transform: scale(1.1);
     }
   </style>
 </head>
@@ -443,56 +437,62 @@
     
     const gallery = document.getElementById('card-gallery');
     const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
-    
+
+    // Erstelle pro Plattform einen Würfel
     platforms.forEach(platform => {
       const status = savedStatuses[platform.id] || platform.status;
       const linkText = platform.title.includes("MPU APP") ? "Zur App" : "Zur Plattform";
-    
-      const card = document.createElement('div');
-      card.className = 'card';
-      card.innerHTML = `
+
+      // Baue den Würfel (6 Flächen)
+      const cube = document.createElement('div');
+      cube.className = 'cube';
+      cube.id = `cube-${platform.id}`;
+
+      // Wir legen die Inhalte auf front- und back-Face, die anderen 4 sind leer
+      cube.innerHTML = `
         <div class="face front">
-            <img src="${platform.img}" alt="${platform.title}">
-            <h3>${platform.title}</h3>
+          <img src="${platform.img}" alt="${platform.title}">
+          <h3>${platform.title}</h3>
         </div>
         <div class="face back">
-            <span class="status-badge" id="status-${platform.id}" data-status="${status}">${status}</span>
-            <a href="${platform.link}" target="_blank">${linkText}</a>
-            <select class="status-select" onchange="updateStatus(${platform.id}, this.value)">
-                <option value="✅ Fertig" ${status === '✅ Fertig' ? 'selected' : ''}>✅ Fertig</option>
-                <option value="🛠️ In Arbeit" ${status === '🛠️ In Arbeit' ? 'selected' : ''}>🛠️ In Arbeit</option>
-                <option value="⚠️ Wartung" ${status === '⚠️ Wartung' ? 'selected' : ''}>⚠️ Wartung</option>
-                <option value="🔄 Update benötigt" ${status === '🔄 Update benötigt' ? 'selected' : ''}>🔄 Update benötigt</option>
-            </select>
+          <span class="status-badge" id="status-${platform.id}" data-status="${status}">
+            ${status}
+          </span>
+          <a href="${platform.link}" target="_blank">${linkText}</a>
+          <select class="status-select" onchange="updateStatus(${platform.id}, this.value)">
+            <option value="✅ Fertig" ${status === '✅ Fertig' ? 'selected' : ''}>✅ Fertig</option>
+            <option value="🛠️ In Arbeit" ${status === '🛠️ In Arbeit' ? 'selected' : ''}>🛠️ In Arbeit</option>
+            <option value="⚠️ Wartung" ${status === '⚠️ Wartung' ? 'selected' : ''}>⚠️ Wartung</option>
+            <option value="🔄 Update benötigt" ${status === '🔄 Update benötigt' ? 'selected' : ''}>🔄 Update benötigt</option>
+          </select>
         </div>
+        <div class="face left"></div>
+        <div class="face right"></div>
+        <div class="face top"></div>
+        <div class="face bottom"></div>
       `;
-      gallery.appendChild(card);
-    
-      card.addEventListener('click', () => {
-        const isFlipped = card.style.transform === "rotateY(180deg)";
-        card.style.transform = isFlipped ? "rotateY(0deg)" : "rotateY(180deg)";
-      });
+
+      gallery.appendChild(cube);
     });
-    
-    function updateStatus(cardId, newStatus) {
-      const statusBadge = document.getElementById(`status-${cardId}`);
+
+    // Funktion für Status-Update
+    function updateStatus(cubeId, newStatus) {
+      const statusBadge = document.getElementById(`status-${cubeId}`);
       if (statusBadge) {
         statusBadge.textContent = newStatus;
         statusBadge.setAttribute('data-status', newStatus);
         const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
-        savedStatuses[cardId] = newStatus;
+        savedStatuses[cubeId] = newStatus;
         localStorage.setItem('platformStatuses', JSON.stringify(savedStatuses));
       }
     }
-    
+
+    // Optional: Dark Mode togglen
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
     }
   </script>
-  
-  <button onclick="toggleDarkMode()"
-          style="position: fixed; top: 10px; right: 10px; padding: 10px; background-color: #003366; color: #ffd700; border: none; border-radius: 5px; font-size: 1rem; cursor: pointer;">
-      Dark Mode
-  </button>
+
+  <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
 </body>
 </html>
