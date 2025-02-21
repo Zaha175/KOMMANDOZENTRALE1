@@ -4,10 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KOMMANDO PLATFORM - 3D CUBE Style</title>
-  
+
   <!-- Google Fonts: Orbitron und Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
-  
+
   <style>
     /* Grundlegendes Styling */
     body {
@@ -20,6 +20,7 @@
       background-attachment: fixed;
       color: #00ffff; /* Neon-Cyan */
       perspective: 1200px; /* Für 3D-Effekt */
+      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
     }
     header {
       background-color: #003366;
@@ -31,8 +32,9 @@
       font-weight: bold;
       letter-spacing: 2px;
       text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
+      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
     }
-    
+
     /* Die Gallery: Grid-Layout für unsere Cubes */
     .gallery {
       display: grid;
@@ -45,7 +47,7 @@
 
     /* Jeder Eintrag ist jetzt ein "Cube"-Container */
     .cube {
-      width: 140px; 
+      width: 140px;
       height: 140px;
       position: relative;
       margin: 0 auto;
@@ -75,16 +77,18 @@
       padding: 10px;
       font-size: 0.8rem;
       backface-visibility: hidden; /* Wichtiger Trick, um Rückseiten zu verstecken */
+      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
     }
 
     /* Front nach vorne verschieben */
     .front {
-      transform: translateZ(70px); 
+      transform: translateZ(70px);
     }
     /* Back dreht sich um 180°, damit sie „hinten“ ist */
     .back {
       transform: rotateY(180deg) translateZ(70px);
       background: linear-gradient(135deg, #003366, #004477);
+      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
     }
 
     /* Die anderen vier Seiten – hier nur einfache Styles */
@@ -114,6 +118,7 @@
       text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
       font-size: 0.9rem;
       text-align: center;
+      transition: color 0.3s; /* Übergang für Dark Mode */
     }
 
     /* Link-Button */
@@ -128,7 +133,7 @@
       display: inline-block;
       text-transform: uppercase;
       font-size: 0.7rem;
-      transition: background-color 0.3s, transform 0.2s;
+      transition: background-color 0.3s, transform 0.2s, color 0.3s; /* Übergang für Dark Mode */
     }
     .face a:hover {
       background-color: #e6c000;
@@ -147,12 +152,14 @@
       text-align: center;
       background-color: #28a745;
       color: #fff;
+      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
     }
     .status-select {
       margin-top: 6px;
       font-size: 0.75rem;
       padding: 4px;
       border-radius: 5px;
+      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
     }
 
     /* Verschiedene Statusfarben */
@@ -173,26 +180,63 @@
       color: #fff;
     }
 
-    /* Dark Mode Button (nur Beispiel) */
+    /* Dark Mode Button */
     .mode-toggle {
       position: fixed;
       top: 10px;
       right: 10px;
-      padding: 10px;
+      padding: 10px 15px; /* Etwas größer für bessere Sichtbarkeit */
       background-color: #003366;
       color: #ffd700;
-      border: none;
+      border: 2px solid #ffd700; /* Deutlicherer Rahmen */
       border-radius: 5px;
       font-size: 1rem;
       cursor: pointer;
       z-index: 1000;
+      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
+      font-family: 'Roboto', sans-serif; /* Lesbarere Schrift */
+      text-shadow: none; /* Kein Textschatten für bessere Lesbarkeit */
+    }
+    .mode-toggle:hover {
+      background-color: #ffd700;
+      color: #003366;
+      transform: scale(1.05); /* Leichter Hover-Effekt */
+    }
+
+    /* Dark Mode CSS */
+    body.dark-mode {
+      background-color: #121212; /* Dunkler Hintergrund */
+      color: #bbbbbb; /* Gedämpftere Textfarbe */
+    }
+    body.dark-mode header {
+      background-color: #333; /* Dunkler Header */
+      color: #eee;
+    }
+    body.dark-mode .face {
+      background: linear-gradient(135deg, #444, #555); /* Dunklere Würfelflächen */
+      border-color: #777;
+      color: #ccc;
+    }
+    body.dark-mode .back {
+      background: linear-gradient(135deg, #555, #666); /* Dunklere Rückseite */
+    }
+    body.dark-mode .face h3 {
+      color: #ddd; /* Hellere Titel */
+    }
+    body.dark-mode .face a {
+      background-color: #888; /* Dunklerer Link-Button */
+      color: #eee;
+    }
+     body.dark-mode  .status-select {
+      background-color: #888; /* Dunklerer Link-Button */
+      color: #eee;
     }
   </style>
 </head>
 <body>
   <header>KOMMANDO ZENTRALE</header>
   <div class="gallery" id="card-gallery"></div>
-  
+
   <script>
     const platforms = [
       {
@@ -433,7 +477,7 @@
         link: "https://zaha175.github.io/WESTWORLDADIAPP/",
         status: "🔄 Update benötigt"
       },
-        {
+  {
         id: 35,
         title: "WESTWORLD MARCO APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/23e357765ca145b28880fbf56d3dd89e/original/image.png",
@@ -441,7 +485,7 @@
         status: "🔄 Update benötigt"
       }
     ];
-    
+
     const gallery = document.getElementById('card-gallery');
     const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
 
