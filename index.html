@@ -4,12 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>KOMMANDO PLATFORM - 3D CUBE Style</title>
-
-  <!-- Google Fonts: Orbitron und Roboto -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto&display=swap" rel="stylesheet">
-
   <style>
-    /* Grundlegendes Styling */
     body {
       font-family: 'Orbitron', sans-serif;
       margin: 0;
@@ -18,13 +14,13 @@
       background-size: cover;
       background-repeat: no-repeat;
       background-attachment: fixed;
-      color: #00ffff; /* Neon-Cyan */
-      perspective: 1200px; /* Für 3D-Effekt */
-      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
+      color: #00ffff;
+      perspective: 1200px;
+      transition: background-color 0.3s, color 0.3s;
     }
     header {
       background-color: #003366;
-      color: #ffd700; /* Gold */
+      color: #ffd700;
       padding: 20px;
       text-align: center;
       font-size: 1.7rem;
@@ -32,10 +28,8 @@
       font-weight: bold;
       letter-spacing: 2px;
       text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
-      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
+      transition: background-color 0.3s, color 0.3s;
     }
-
-    /* Die Gallery: Grid-Layout für unsere Cubes */
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -44,23 +38,18 @@
       max-width: 1400px;
       margin: 0 auto;
     }
-
-    /* Jeder Eintrag ist jetzt ein "Cube"-Container */
     .cube {
       width: 140px;
       height: 140px;
       position: relative;
       margin: 0 auto;
-      transform-style: preserve-3d;  /* 3D-Berechnung aktivieren */
+      transform-style: preserve-3d;
       transition: transform 1s;
       cursor: pointer;
     }
-    /* Bei Hover drehen wir den Würfel z.B. um 180 Grad */
     .cube:hover {
       transform: rotateY(180deg);
     }
-
-    /* Jede Seite des Würfels */
     .face {
       position: absolute;
       width: 140px;
@@ -76,36 +65,21 @@
       justify-content: center;
       padding: 10px;
       font-size: 0.8rem;
-      backface-visibility: hidden; /* Wichtiger Trick, um Rückseiten zu verstecken */
-      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
+      backface-visibility: hidden;
+      transition: background-color 0.3s, color 0.3s;
     }
-
-    /* Front nach vorne verschieben */
     .front {
       transform: translateZ(70px);
     }
-    /* Back dreht sich um 180°, damit sie „hinten“ ist */
     .back {
       transform: rotateY(180deg) translateZ(70px);
       background: linear-gradient(135deg, #003366, #004477);
-      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
+      transition: background-color 0.3s, color 0.3s;
     }
-
-    /* Die anderen vier Seiten – hier nur einfache Styles */
-    .right {
-      transform: rotateY(90deg) translateZ(70px);
-    }
-    .left {
-      transform: rotateY(-90deg) translateZ(70px);
-    }
-    .top {
-      transform: rotateX(90deg) translateZ(70px);
-    }
-    .bottom {
-      transform: rotateX(-90deg) translateZ(70px);
-    }
-
-    /* Bild + Titel in der Front */
+    .right { transform: rotateY(90deg) translateZ(70px); }
+    .left { transform: rotateY(-90deg) translateZ(70px); }
+    .top { transform: rotateX(90deg) translateZ(70px); }
+    .bottom { transform: rotateX(-90deg) translateZ(70px); }
     .face img {
       width: 60%;
       height: auto;
@@ -118,10 +92,8 @@
       text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
       font-size: 0.9rem;
       text-align: center;
-      transition: color 0.3s; /* Übergang für Dark Mode */
+      transition: color 0.3s;
     }
-
-    /* Link-Button */
     .face a {
       text-decoration: none;
       color: #002244;
@@ -133,15 +105,13 @@
       display: inline-block;
       text-transform: uppercase;
       font-size: 0.7rem;
-      transition: background-color 0.3s, transform 0.2s, color 0.3s; /* Übergang für Dark Mode */
+      transition: background-color 0.3s, transform 0.2s, color 0.3s;
     }
     .face a:hover {
       background-color: #e6c000;
       transform: scale(1.05);
       color: #003366;
     }
-
-    /* Status-Badge & Select */
     .status-badge {
       display: inline-block;
       padding: 3px 6px;
@@ -152,89 +122,72 @@
       text-align: center;
       background-color: #28a745;
       color: #fff;
-      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
+      transition: background-color 0.3s, color 0.3s;
     }
     .status-select {
       margin-top: 6px;
       font-size: 0.75rem;
       padding: 4px;
       border-radius: 5px;
-      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
+      transition: background-color 0.3s, color 0.3s;
+      width: 100%; /* Bessere Sichtbarkeit */
     }
-
-    /* Verschiedene Statusfarben */
-    .status-badge[data-status="✅ Fertig"] {
-      background-color: #28a745;
-      color: #fff;
-    }
-    .status-badge[data-status="🛠️ In Arbeit"] {
-      background-color: #ffc107;
-      color: #333;
-    }
-    .status-badge[data-status="⚠️ Wartung"] {
-      background-color: #dc3545;
-      color: #fff;
-    }
-    .status-badge[data-status="🔄 Update benötigt"] {
-      background-color: #17a2b8;
-      color: #fff;
-    }
-
-    /* Dark Mode Button */
+    .status-badge[data-status="✅ Fertig"] { background-color: #28a745; color: #fff; }
+    .status-badge[data-status="🛠️ In Arbeit"] { background-color: #ffc107; color: #333; }
+    .status-badge[data-status="⚠️ Wartung"] { background-color: #dc3545; color: #fff; }
+    .status-badge[data-status="🔄 Update benötigt"] { background-color: #17a2b8; color: #fff; }
     .mode-toggle {
       position: fixed;
       top: 10px;
       right: 10px;
-      padding: 10px 15px; /* Etwas größer für bessere Sichtbarkeit */
+      padding: 10px 15px;
       background-color: #003366;
       color: #ffd700;
-      border: 2px solid #ffd700; /* Deutlicherer Rahmen */
+      border: 2px solid #ffd700;
       border-radius: 5px;
       font-size: 1rem;
       cursor: pointer;
       z-index: 1000;
-      transition: background-color 0.3s, color 0.3s; /* Übergang für Dark Mode */
-      font-family: 'Roboto', sans-serif; /* Lesbarere Schrift */
-      text-shadow: none; /* Kein Textschatten für bessere Lesbarkeit */
+      transition: background-color 0.3s, color 0.3s;
+      font-family: 'Roboto', sans-serif;
     }
     .mode-toggle:hover {
       background-color: #ffd700;
       color: #003366;
-      transform: scale(1.05); /* Leichter Hover-Effekt */
+      transform: scale(1.05);
     }
-
-    /* Dark Mode CSS */
     body.dark-mode {
-      background-color: #121212; /* Dunkler Hintergrund */
-      color: #bbbbbb; /* Gedämpftere Textfarbe */
+      background-color: #121212;
+      color: #bbbbbb;
     }
     body.dark-mode header {
-      background-color: #333; /* Dunkler Header */
+      background-color: #333;
       color: #eee;
     }
     body.dark-mode .face {
-      background: linear-gradient(135deg, #444, #555); /* Dunklere Würfelflächen */
+      background: linear-gradient(135deg, #444, #555);
       border-color: #777;
       color: #ccc;
     }
     body.dark-mode .back {
-      background: linear-gradient(135deg, #555, #666); /* Dunklere Rückseite */
+      background: linear-gradient(135deg, #555, #666);
     }
     body.dark-mode .face h3 {
-      color: #ddd; /* Hellere Titel */
+      color: #ddd;
     }
     body.dark-mode .face a {
-      background-color: #888; /* Dunklerer Link-Button */
+      background-color: #888;
       color: #eee;
     }
-     body.dark-mode  .status-select {
-      background-color: #888; /* Dunklerer Link-Button */
+    body.dark-mode .status-select {
+      background-color: #666;
       color: #eee;
     }
   </style>
 </head>
 <body>
   <header>KOMMANDO ZENTRALE</header>
+  <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
   <div class="gallery" id="card-gallery"></div>
 
   <script>
@@ -510,28 +463,23 @@
     const gallery = document.getElementById('card-gallery');
     const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
 
-    // Erstelle pro Plattform einen Würfel
     platforms.forEach(platform => {
       const status = savedStatuses[platform.id] || platform.status;
       const linkText = platform.title.includes("MPU APP") ? "Zur App" : "Zur Plattform";
 
-      // Baue den Würfel (6 Flächen)
       const cube = document.createElement('div');
       cube.className = 'cube';
       cube.id = `cube-${platform.id}`;
 
-      // Wir legen die Inhalte auf front- und back-Face, die anderen 4 sind leer
       cube.innerHTML = `
         <div class="face front">
           <img src="${platform.img}" alt="${platform.title}">
           <h3>${platform.title}</h3>
         </div>
         <div class="face back">
-          <span class="status-badge" id="status-${platform.id}" data-status="${status}">
-            ${status}
-          </span>
+          <span class="status-badge" id="status-${platform.id}" data-status="${status}">${status}</span>
           <a href="${platform.link}" target="_blank">${linkText}</a>
-          <select class="status-select" onchange="updateStatus(${platform.id}, this.value)">
+          <select class="status-select" id="select-${platform.id}">
             <option value="✅ Fertig" ${status === '✅ Fertig' ? 'selected' : ''}>✅ Fertig</option>
             <option value="🛠️ In Arbeit" ${status === '🛠️ In Arbeit' ? 'selected' : ''}>🛠️ In Arbeit</option>
             <option value="⚠️ Wartung" ${status === '⚠️ Wartung' ? 'selected' : ''}>⚠️ Wartung</option>
@@ -545,26 +493,35 @@
       `;
 
       gallery.appendChild(cube);
+
+      // Event-Listener für Statusänderung
+      const select = document.getElementById(`select-${platform.id}`);
+      select.addEventListener('change', (event) => {
+        const newStatus = event.target.value;
+        updateStatus(platform.id, newStatus);
+      });
     });
 
-    // Funktion für Status-Update
     function updateStatus(cubeId, newStatus) {
       const statusBadge = document.getElementById(`status-${cubeId}`);
       if (statusBadge) {
         statusBadge.textContent = newStatus;
         statusBadge.setAttribute('data-status', newStatus);
+
+        // Speichere den neuen Status in localStorage
         const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
         savedStatuses[cubeId] = newStatus;
         localStorage.setItem('platformStatuses', JSON.stringify(savedStatuses));
+
+        console.log(`Status geändert: Cube ${cubeId} -> ${newStatus}`);
+      } else {
+        console.error(`Status-Badge mit ID status-${cubeId} nicht gefunden`);
       }
     }
 
-    // Optional: Dark Mode togglen
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
     }
   </script>
-
-  <button class="mode-toggle" onclick="toggleDarkMode()">Dark Mode</button>
 </body>
 </html>
