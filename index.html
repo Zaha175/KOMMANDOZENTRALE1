@@ -44,11 +44,14 @@
       position: relative;
       margin: 0 auto;
       transform-style: preserve-3d;
-      transition: transform 1s;
+      transition: transform 0.5s; /* Verkürzte Dauer für schnellere Rotation */
       cursor: pointer;
     }
     .cube:hover {
       transform: rotateY(180deg);
+    }
+    .cube:hover .front {
+      pointer-events: none; /* Deaktiviert Klicks auf der Vorderseite während Hover */
     }
     .face {
       position: absolute;
@@ -75,6 +78,7 @@
       transform: rotateY(180deg) translateZ(70px);
       background: linear-gradient(135deg, #003366, #004477);
       transition: background-color 0.3s, color 0.3s;
+      pointer-events: auto; /* Stellt sicher, dass die Rückseite klickbar bleibt */
     }
     .right { transform: rotateY(90deg) translateZ(70px); }
     .left { transform: rotateY(-90deg) translateZ(70px); }
@@ -130,7 +134,7 @@
       padding: 4px;
       border-radius: 5px;
       transition: background-color 0.3s, color 0.3s;
-      width: 100%; /* Bessere Sichtbarkeit */
+      width: 100%;
     }
     .status-badge[data-status="✅ Fertig"] { background-color: #28a745; color: #fff; }
     .status-badge[data-status="🛠️ In Arbeit"] { background-color: #ffc107; color: #333; }
@@ -213,7 +217,7 @@
         link: "https://zaha175.github.io/MPU-Plattform-bersicht/",
         status: "✅ Fertig"
       },
-    {
+      {
         id: 40,
         title: "PLATFORM SPIELEX WEBSITE",
         img: "https://i.imgur.com/cVNquR7.jpeg",
@@ -241,7 +245,7 @@
         link: "https://zaha175.github.io/MPUPLATFORMULTRA/",
         status: "⚠️ Wartung"
       },
-        {
+      {
         id: 34,
         title: "PLATFORM JURI ULTRA",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/0588f657c0944196addd17f6899211a9/original/Screenshot-2025-01-16-210905.jpg",
@@ -465,14 +469,14 @@
         link: "https://zaha175.github.io/WESTWORLDADIAPP/",
         status: "🔄 Update benötigt"
       },
-  {
+      {
         id: 35,
         title: "WESTWORLD MARCO APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/23e357765ca145b28880fbf56d3dd89e/original/image.png",
         link: "https://zaha175.github.io/PHYSIKMARCOPLATFORM/",
         status: "🔄 Update benötigt"
       },
-  {
+      {
         id: 36,
         title: "WESTWORLD JACOB MATHE APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/23e357765ca145b28880fbf56d3dd89e/original/image.png",
@@ -528,6 +532,11 @@
         const newStatus = event.target.value;
         updateStatus(platform.id, newStatus);
       });
+
+      // Debugging: Klick-Event-Listener
+      cube.addEventListener('click', (e) => {
+        console.log('Klick auf Würfel registriert:', e.target);
+      });
     });
 
     function updateStatus(cubeId, newStatus) {
@@ -536,7 +545,6 @@
         statusBadge.textContent = newStatus;
         statusBadge.setAttribute('data-status', newStatus);
 
-        // Speichere den neuen Status in localStorage
         const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
         savedStatuses[cubeId] = newStatus;
         localStorage.setItem('platformStatuses', JSON.stringify(savedStatuses));
