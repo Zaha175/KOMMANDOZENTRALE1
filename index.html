@@ -47,12 +47,10 @@
       transition: transform 0.5s; /* Verkürzte Dauer für schnellere Rotation */
       cursor: pointer;
     }
-    .cube:hover {
+    .cube.rotated { /* Hinzugefügte Klasse für die gedrehte Ansicht */
       transform: rotateY(180deg);
     }
-    .cube:hover .front {
-      pointer-events: none; /* Deaktiviert Klicks auf der Vorderseite während Hover */
-    }
+
     .face {
       position: absolute;
       width: 140px;
@@ -78,7 +76,7 @@
       transform: rotateY(180deg) translateZ(70px);
       background: linear-gradient(135deg, #003366, #004477);
       transition: background-color 0.3s, color 0.3s;
-      pointer-events: auto; /* Stellt sicher, dass die Rückseite klickbar bleibt */
+      /* pointer-events: auto;  Entfernt, da nicht benötigt */
     }
     .right { transform: rotateY(90deg) translateZ(70px); }
     .left { transform: rotateY(-90deg) translateZ(70px); }
@@ -448,7 +446,7 @@
         link: "https://zaha175.github.io/MPUPLATFROMADIULTRA/",
         status: "🛠️ In Arbeit"
       },
-      {
+            {
         id: 30,
         title: "MPU APP ADI",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
@@ -492,7 +490,7 @@
       }
     ];
 
-    const gallery = document.getElementById('card-gallery');
+   const gallery = document.getElementById('card-gallery');
     const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
 
     platforms.forEach(platform => {
@@ -529,29 +527,38 @@
       // Event-Listener für Statusänderung
       const select = document.getElementById(`select-${platform.id}`);
       select.addEventListener('change', (event) => {
-        const newStatus = event.target.value;
-        updateStatus(platform.id, newStatus);
+        updateStatus(platform.id, event.target.value);
       });
 
-      // Debugging: Klick-Event-Listener
-      cube.addEventListener('click', (e) => {
-        console.log('Klick auf Würfel registriert:', e.target);
-      });
+      let rotateTimeout; // Variable zum Speichern der Timeout-ID
+
+        // Klick-Event-Listener für den Würfel
+        cube.addEventListener('click', (e) => {
+          // Lösche den vorherigen Timeout, falls vorhanden
+          clearTimeout(rotateTimeout);
+
+            cube.classList.toggle('rotated'); // Drehe den Würfel (hin und her)
+
+            // Setze einen neuen Timeout, um den Würfel nach 3 Sekunden zurückzudrehen
+            if (cube.classList.contains('rotated')) {
+                rotateTimeout = setTimeout(() => {
+                    cube.classList.remove('rotated');
+                }, 3000); // 3000 Millisekunden = 3 Sekunden
+            }
+        });
     });
 
-    function updateStatus(cubeId, newStatus) {
-      const statusBadge = document.getElementById(`status-${cubeId}`);
-      if (statusBadge) {
+    function updateStatus(platformId, newStatus) {
+      const statusBadge = document.getElementById(`status-${platformId}`);
+      if (statusBadge) { //Stellt sicher das Element existiert
         statusBadge.textContent = newStatus;
         statusBadge.setAttribute('data-status', newStatus);
 
-        const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
-        savedStatuses[cubeId] = newStatus;
+        // Speichern des Status im localStorage *und* im Objekt
+        savedStatuses[platformId] = newStatus;
         localStorage.setItem('platformStatuses', JSON.stringify(savedStatuses));
-
-        console.log(`Status geändert: Cube ${cubeId} -> ${newStatus}`);
       } else {
-        console.error(`Status-Badge mit ID status-${cubeId} nicht gefunden`);
+        console.error("Status-Badge nicht gefunden für ID:", platformId);
       }
     }
 
