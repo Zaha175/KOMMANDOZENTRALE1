@@ -15,7 +15,6 @@
       background-repeat: no-repeat;
       background-attachment: fixed;
       color: #00ffff;
-      perspective: 1200px;
       transition: background-color 0.3s, color 0.3s;
     }
     header {
@@ -29,115 +28,75 @@
       letter-spacing: 2px;
       text-shadow: 2px 2px 5px rgba(0,0,0,0.7);
       transition: background-color 0.3s, color 0.3s;
+      z-index: 100;
+      position: relative;
     }
     .gallery {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 30px;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 15px;
       padding: 20px;
       max-width: 1400px;
       margin: 0 auto;
     }
-    .cube {
-      width: 140px;
-      height: 140px;
-      position: relative;
+    
+    @media (min-width: 1200px) {
+      .gallery {
+        grid-template-columns: repeat(8, minmax(120px, 1fr));
+      }
+    }
+    
+    .card {
+      width: 120px;
+      height: 140px; /* Von 170px auf 140px gekürzt */
       margin: 0 auto;
-      transform-style: preserve-3d;
-      transition: transform 0.5s; /* Verkürzte Dauer für schnellere Rotation */
       cursor: pointer;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .cube.rotated { /* Hinzugefügte Klasse für die gedrehte Ansicht */
-      transform: rotateY(180deg);
+    
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      text-align: center;
     }
-
-    .face {
-      position: absolute;
-      width: 140px;
-      height: 140px;
-      border: 2px solid #ffd700;
+    
+    .card:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+    }
+    
+    .card-front {
+      width: 100%;
+      height: 100%;
       border-radius: 10px;
-      box-sizing: border-box;
-      background: linear-gradient(135deg, #002244, #003366);
-      color: #fff;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 10px;
-      font-size: 0.8rem;
-      backface-visibility: hidden;
-      transition: background-color 0.3s, color 0.3s;
+      box-sizing: border-box;
+      background: linear-gradient(135deg, #002244, #003366);
+      border: 2px solid #ffd700;
+      color: white;
     }
-    .front {
-      transform: translateZ(70px);
-    }
-    .back {
-      transform: rotateY(180deg) translateZ(70px);
-      background: linear-gradient(135deg, #003366, #004477);
-      transition: background-color 0.3s, color 0.3s;
-      /* pointer-events: auto;  Entfernt, da nicht benötigt */
-    }
-    .right { transform: rotateY(90deg) translateZ(70px); }
-    .left { transform: rotateY(-90deg) translateZ(70px); }
-    .top { transform: rotateX(90deg) translateZ(70px); }
-    .bottom { transform: rotateX(-90deg) translateZ(70px); }
-    .face img {
-      width: 60%;
+    
+    .card-front img {
+      width: 70%;
       height: auto;
       margin-bottom: 8px;
-      border-bottom: 2px solid #ffd700;
+      border-radius: 5px;
     }
-    .face h3 {
-      margin: 4px 0;
+    
+    .card-title {
+      font-size: 0.8rem;
+      font-weight: bold;
       color: #ffd700;
-      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
-      font-size: 0.9rem;
-      text-align: center;
-      transition: color 0.3s;
-    }
-    .face a {
-      text-decoration: none;
-      color: #002244;
-      font-weight: bold;
-      background-color: #ffd700;
-      padding: 4px 8px;
-      border-radius: 5px;
-      margin: 6px auto 0;
-      display: inline-block;
-      text-transform: uppercase;
-      font-size: 0.7rem;
-      transition: background-color 0.3s, transform 0.2s, color 0.3s;
-    }
-    .face a:hover {
-      background-color: #e6c000;
-      transform: scale(1.05);
-      color: #003366;
-    }
-    .status-badge {
-      display: inline-block;
-      padding: 3px 6px;
-      font-size: 0.75rem;
-      font-weight: bold;
-      border-radius: 5px;
       margin: 5px 0;
-      text-align: center;
-      background-color: #28a745;
-      color: #fff;
-      transition: background-color 0.3s, color 0.3s;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.7);
     }
-    .status-select {
-      margin-top: 6px;
-      font-size: 0.75rem;
-      padding: 4px;
-      border-radius: 5px;
-      transition: background-color 0.3s, color 0.3s;
-      width: 100%;
-    }
-    .status-badge[data-status="✅ Fertig"] { background-color: #28a745; color: #fff; }
-    .status-badge[data-status="🛠️ In Arbeit"] { background-color: #ffc107; color: #333; }
-    .status-badge[data-status="⚠️ Wartung"] { background-color: #dc3545; color: #fff; }
-    .status-badge[data-status="🔄 Update benötigt"] { background-color: #17a2b8; color: #fff; }
+    
     .mode-toggle {
       position: fixed;
       top: 10px;
@@ -153,37 +112,30 @@
       transition: background-color 0.3s, color 0.3s;
       font-family: 'Roboto', sans-serif;
     }
+    
     .mode-toggle:hover {
       background-color: #ffd700;
       color: #003366;
       transform: scale(1.05);
     }
+    
     body.dark-mode {
       background-color: #121212;
       color: #bbbbbb;
     }
+    
     body.dark-mode header {
       background-color: #333;
       color: #eee;
     }
-    body.dark-mode .face {
+    
+    body.dark-mode .card-front {
       background: linear-gradient(135deg, #444, #555);
       border-color: #777;
-      color: #ccc;
     }
-    body.dark-mode .back {
-      background: linear-gradient(135deg, #555, #666);
-    }
-    body.dark-mode .face h3 {
+    
+    body.dark-mode .card-title {
       color: #ddd;
-    }
-    body.dark-mode .face a {
-      background-color: #888;
-      color: #eee;
-    }
-    body.dark-mode .status-select {
-      background-color: #666;
-      color: #eee;
     }
   </style>
 </head>
@@ -198,369 +150,279 @@
         id: 15,
         title: "COMMAND BERATER APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/9aa69d36efe044198d779e76539fe786/original/KOMMANDO.jpg",
-        link: "https://chatgpt.com/g/g-675614557158819192e6ec5d2573a3b8-commandberater",
-        status: "🔄 Update benötigt"
+        link: "https://chatgpt.com/g/g-675614557158819192e6ec5d2573a3b8-commandberater"
       },
       {
         id: 28,
         title: "HOSTZENTRALE APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/df58484a6bb54b858b64d0abddab5ae1/original/image-1.jpg",
-        link: "https://zaha175.github.io/CUBHOSTZENTRALE/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/CUBHOSTZENTRALE/"
       },
       {
         id: 1,
         title: "PLATFORM WEBSITE",
         img: "https://i.imgur.com/cVNquR7.jpeg",
-        link: "https://zaha175.github.io/MPU-Plattform-bersicht/",
-        status: "✅ Fertig"
+        link: "https://zaha175.github.io/MPU-Plattform-bersicht/"
       },
       {
         id: 40,
         title: "PLATFORM SPIELEX WEBSITE",
         img: "https://i.imgur.com/cVNquR7.jpeg",
-        link: "https://zaha175.github.io/PLATFORMSPIELEX/",
-        status: "✅ Fertig"
+        link: "https://zaha175.github.io/PLATFORMSPIELEX/"
       },
       {
         id: 22,
         title: "PLATFORM ROM ULTRA",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/a84d61cdc53748fbb55c166cca609b2e/original/Screenshot-2025-01-18-120114.jpg",
-        link: "https://zaha175.github.io/MPUPLATFORMROMULTRA/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUPLATFORMROMULTRA/"
       },
       {
         id: 2,
         title: "PLATFORM ROM PRO",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/20ff358195fc477eb3238557acb879eb/original/image.png",
-        link: "https://zaha175.github.io/MPUPLATFORMROM/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUPLATFORMROM/"
       },
       {
         id: 20,
         title: "PLATFORM ULTRA",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/0588f657c0944196addd17f6899211a9/original/Screenshot-2025-01-16-210905.jpg",
-        link: "https://zaha175.github.io/MPUPLATFORMULTRA/",
-        status: "⚠️ Wartung"
+        link: "https://zaha175.github.io/MPUPLATFORMULTRA/"
       },
       {
         id: 34,
         title: "PLATFORM JURI ULTRA",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/0588f657c0944196addd17f6899211a9/original/Screenshot-2025-01-16-210905.jpg",
-        link: "https://zaha175.github.io/MPUPLATFORMJURIULTRA/",
-        status: "⚠️ Wartung"
+        link: "https://zaha175.github.io/MPUPLATFORMJURIULTRA/"
       },
       {
         id: 3,
         title: "PLATFORM PRO",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/20ff358195fc477eb3238557acb879eb/original/image.png",
-        link: "https://zaha175.github.io/MPUPLATFORMDE/",
-        status: "⚠️ Wartung"
+        link: "https://zaha175.github.io/MPUPLATFORMDE/"
       },
       {
         id: 42,
         title: "MPU APP ZEITSPRUNG DEU",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "https://zaha175.github.io/ZEITSPRUNGABSTINENZ/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/ZEITSPRUNGABSTINENZ/"
       },
       {
         id: 24,
         title: "ALTERSTOPP PLATFORM ULTRA1",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/8af3b81b16664a9b87a842ed7e677aa9/original/image.png",
-        link: "https://zaha175.github.io/ALTERUNGSSTOPPPLATFORMULTRA1/",
-        status: "⚠️ Wartung"
+        link: "https://zaha175.github.io/ALTERUNGSSTOPPPLATFORMULTRA1/"
       },
       {
         id: 21,
         title: "ALTERSTOPP PLATFORM ULTRA",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/7795f3d1ccd94e7eb9b4f5e97f0bee8f/original/image.png",
-        link: "https://zaha175.github.io/ALTERUNGSSTOPPPLATFORMULTRA/",
-        status: "⚠️ Wartung"
+        link: "https://zaha175.github.io/ALTERUNGSSTOPPPLATFORMULTRA/"
       },
       {
         id: 18,
         title: "ALTERSTOPP PLATFORM PRO",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/4c9e5c9e8dad48a7b41f44f6982ffb75/original/Screenshot-2025-01-03-213036.jpg",
-        link: "https://zaha175.github.io/ALTERUNGSSTOPPPLATFORM/",
-        status: "⚠️ Wartung"
+        link: "https://zaha175.github.io/ALTERUNGSSTOPPPLATFORM/"
       },
       {
         id: 25,
         title: "PLATFORM MINCU ULTRA",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/a84d61cdc53748fbb55c166cca609b2e/original/Screenshot-2025-01-18-120114.jpg",
-        link: "https://zaha175.github.io/MPUPLATFORMMINCUULTRA/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUPLATFORMMINCUULTRA/"
       },
       {
         id: 17,
         title: "PLATFORM MINCU PRO",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/20ff358195fc477eb3238557acb879eb/original/image.png",
-        link: "https://zaha175.github.io/MPUPLATFORMMINCUPRO/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUPLATFORMMINCUPRO/"
       },
       {
         id: 4,
         title: "MPU APP MINCU",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "https://zaha175.github.io/MINCUABSTINENZ/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/MINCUABSTINENZ/"
       },
       {
         id: 5,
         title: "MPU APP STEFAN",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "https://zaha175.github.io/STEFANABUZ1/",
-        status: "✅ Fertig"
+        link: "https://zaha175.github.io/STEFANABUZ1/"
       },
       {
         id: 23,
         title: "PLATFORM PETRU ULTRA",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/a84d61cdc53748fbb55c166cca609b2e/original/Screenshot-2025-01-18-120114.jpg",
-        link: "https://zaha175.github.io/MPUPLATFORMPETULTRA/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUPLATFORMPETULTRA/"
       },
       {
         id: 13,
         title: "PLATFORM PETRU PRO",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/20ff358195fc477eb3238557acb879eb/original/image.png",
-        link: "https://zaha175.github.io/MPUPLATFORMPETRUPRO/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUPLATFORMPETRUPRO/"
       },
       {
         id: 6,
         title: "MPU APP PETRU",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "https://zaha175.github.io/ABUZROM/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/ABUZROM/"
       },
       {
         id: 37,
         title: "MPU APP GHID",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "https://zaha175.github.io/MPUAPPPETRUNEU/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUAPPPETRUNEU/"
       },
       {
         id: 38,
         title: "MPU APP PETRU II",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "https://zaha175.github.io/MPUAPPPETRUNEU1/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUAPPPETRUNEU1/"
       },
       {
         id: 41,
         title: "MPU APP ZEITSPRUNG ROM ",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "https://zaha175.github.io/ZEITSPRUNGPETER/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/ZEITSPRUNGPETER/"
       },
       {
         id: 16,
         title: "HOSTCUB PETRU APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/df58484a6bb54b858b64d0abddab5ae1/original/image-1.jpg",
-        link: "https://zaha175.github.io/HOSTCUB/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/HOSTCUB/"
       },
       {
         id: 32,
         title: "WESTWORLD PETRU APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/23e357765ca145b28880fbf56d3dd89e/original/image.png",
-        link: "https://zaha175.github.io/WESTWORLDPETRUAPP/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/WESTWORLDPETRUAPP/"
       },
       {
         id: 26,
         title: "PLATFORM COSTINEL ULTRA",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/a84d61cdc53748fbb55c166cca609b2e/original/Screenshot-2025-01-18-120114.jpg",
-        link: "https://zaha175.github.io/MPUPLATFORMCOSTINELULTRA/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUPLATFORMCOSTINELULTRA/"
       },
       {
         id: 19,
         title: "PLATFORM COSTINEL PRO",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/20ff358195fc477eb3238557acb879eb/original/image.png",
-        link: "https://zaha175.github.io/MPUPLATFORMCOSTINELPRO/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUPLATFORMCOSTINELPRO/"
       },
       {
         id: 7,
         title: "MPU APP COSTINEL",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "https://zaha175.github.io/ABUZCOSTINEL/",
-        status: "⚠️ Wartung"
+        link: "https://zaha175.github.io/ABUZCOSTINEL/"
       },
       {
         id: 27,
         title: "PLATFORM FLORIN ULTRA",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/a84d61cdc53748fbb55c166cca609b2e/original/Screenshot-2025-01-18-120114.jpg",
-        link: "https://zaha175.github.io/MPUPLATFORMFLORINULTRA/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUPLATFORMFLORINULTRA/"
       },
       {
         id: 8,
         title: "MPU APP FLORIN",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "https://zaha175.github.io/ABUZFLORINROMALT/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/ABUZFLORINROMALT/"
       },
       {
         id: 9,
         title: "MPU APP GHEORGHE",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "#",
-        status: "✅ Fertig"
+        link: "#"
       },
       {
         id: 10,
         title: "MPU APP LIVIU",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "https://zaha175.github.io/ALLESHINCUALT/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/ALLESHINCUALT/"
       },
       {
         id: 11,
         title: "URSACHEN APP ROM",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/523bdbade59b45d3b90a6d0a6641470a/original/image.png",
-        link: "https://zaha175.github.io/URSACHENAPPROM/",
-        status: "⚠️ Wartung"
+        link: "https://zaha175.github.io/URSACHENAPPROM/"
       },
       {
         id: 12,
         title: "URSACHEN APP DE",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/523bdbade59b45d3b90a6d0a6641470a/original/image.png",
-        link: "https://zaha175.github.io/URSACHENAPPDE/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/URSACHENAPPDE/"
       },
       {
         id: 14,
         title: "URSACHEN APP BERATER",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/523bdbade59b45d3b90a6d0a6641470a/original/image.png",
-        link: "https://chatgpt.com/g/g-6798a9be662881919f402347f8a5da5e-ursachen-berater",
-        status: "⚠️ Wartung"
+        link: "https://chatgpt.com/g/g-6798a9be662881919f402347f8a5da5e-ursachen-berater"
       },
       {
         id: 29,
         title: "PLATFORM ADI ULTRA",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/a84d61cdc53748fbb55c166cca609b2e/original/Screenshot-2025-01-18-120114.jpg",
-        link: "https://zaha175.github.io/MPUPLATFROMADIULTRA/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/MPUPLATFROMADIULTRA/"
       },
-            {
+      {
         id: 30,
         title: "MPU APP ADI",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/d72faf9cb3c041ceb79590e3ee8db024/original/Screenshot-2024-12-26-161706.jpg",
-        link: "https://zaha175.github.io/WEBAPPADI/",
-        status: "🛠️ In Arbeit"
+        link: "https://zaha175.github.io/WEBAPPADI/"
       },
       {
         id: 31,
         title: "HOSTCUB ADI APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/df58484a6bb54b858b64d0abddab5ae1/original/image-1.jpg",
-        link: "https://zaha175.github.io/HOSTCUBADI/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/HOSTCUBADI/"
       },
       {
         id: 33,
         title: "WESTWORLD ADI APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/23e357765ca145b28880fbf56d3dd89e/original/image.png",
-        link: "https://zaha175.github.io/WESTWORLDADIAPP/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/WESTWORLDADIAPP/"
       },
       {
         id: 35,
         title: "WESTWORLD MARCO APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/23e357765ca145b28880fbf56d3dd89e/original/image.png",
-        link: "https://zaha175.github.io/PHYSIKMARCOPLATFORM/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/PHYSIKMARCOPLATFORM/"
       },
       {
         id: 36,
         title: "WESTWORLD JACOB MATHE APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/23e357765ca145b28880fbf56d3dd89e/original/image.png",
-        link: "https://zaha175.github.io/MATHEPLATFORMSTEFAN/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/MATHEPLATFORMSTEFAN/"
       },
       {
         id: 39,
         title: "WESTWORLD STEFAN MATHE APP",
         img: "https://cdn.gamma.app/fhpleqvbjim2f32/23e357765ca145b28880fbf56d3dd89e/original/image.png",
-        link: "https://zaha175.github.io/MATHEPLATFORMSTEFAN1/",
-        status: "🔄 Update benötigt"
+        link: "https://zaha175.github.io/MATHEPLATFORMSTEFAN1/"
       }
     ];
 
-   const gallery = document.getElementById('card-gallery');
-    const savedStatuses = JSON.parse(localStorage.getItem('platformStatuses')) || {};
+    const gallery = document.getElementById('card-gallery');
 
     platforms.forEach(platform => {
-      const status = savedStatuses[platform.id] || platform.status;
-      const linkText = platform.title.includes("MPU APP") ? "Zur App" : "Zur Plattform";
+      // Erstelle Karte mit direktem Link-Handling
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.id = `card-${platform.id}`;
+      card.onclick = function() {
+        window.open(platform.link, '_blank');
+      };
 
-      const cube = document.createElement('div');
-      cube.className = 'cube';
-      cube.id = `cube-${platform.id}`;
-
-      cube.innerHTML = `
-        <div class="face front">
-          <img src="${platform.img}" alt="${platform.title}">
-          <h3>${platform.title}</h3>
+      // Einfügen des Inhalts (nur Vorderseite)
+      card.innerHTML = `
+        <div class="card-inner">
+          <div class="card-front">
+            <img src="${platform.img}" alt="${platform.title}">
+            <div class="card-title">${platform.title}</div>
+          </div>
         </div>
-        <div class="face back">
-          <span class="status-badge" id="status-${platform.id}" data-status="${status}">${status}</span>
-          <a href="${platform.link}" target="_blank">${linkText}</a>
-          <select class="status-select" id="select-${platform.id}">
-            <option value="✅ Fertig" ${status === '✅ Fertig' ? 'selected' : ''}>✅ Fertig</option>
-            <option value="🛠️ In Arbeit" ${status === '🛠️ In Arbeit' ? 'selected' : ''}>🛠️ In Arbeit</option>
-            <option value="⚠️ Wartung" ${status === '⚠️ Wartung' ? 'selected' : ''}>⚠️ Wartung</option>
-            <option value="🔄 Update benötigt" ${status === '🔄 Update benötigt' ? 'selected' : ''}>🔄 Update benötigt</option>
-          </select>
-        </div>
-        <div class="face left"></div>
-        <div class="face right"></div>
-        <div class="face top"></div>
-        <div class="face bottom"></div>
       `;
 
-      gallery.appendChild(cube);
-
-      // Event-Listener für Statusänderung
-      const select = document.getElementById(`select-${platform.id}`);
-      select.addEventListener('change', (event) => {
-        updateStatus(platform.id, event.target.value);
-      });
-
-      let rotateTimeout; // Variable zum Speichern der Timeout-ID
-
-        // Klick-Event-Listener für den Würfel
-        cube.addEventListener('click', (e) => {
-          // Lösche den vorherigen Timeout, falls vorhanden
-          clearTimeout(rotateTimeout);
-
-            cube.classList.toggle('rotated'); // Drehe den Würfel (hin und her)
-
-            // Setze einen neuen Timeout, um den Würfel nach 3 Sekunden zurückzudrehen
-            if (cube.classList.contains('rotated')) {
-                rotateTimeout = setTimeout(() => {
-                    cube.classList.remove('rotated');
-                }, 3000); // 3000 Millisekunden = 3 Sekunden
-            }
-        });
+      gallery.appendChild(card);
     });
-
-    function updateStatus(platformId, newStatus) {
-      const statusBadge = document.getElementById(`status-${platformId}`);
-      if (statusBadge) { //Stellt sicher das Element existiert
-        statusBadge.textContent = newStatus;
-        statusBadge.setAttribute('data-status', newStatus);
-
-        // Speichern des Status im localStorage *und* im Objekt
-        savedStatuses[platformId] = newStatus;
-        localStorage.setItem('platformStatuses', JSON.stringify(savedStatuses));
-      } else {
-        console.error("Status-Badge nicht gefunden für ID:", platformId);
-      }
-    }
 
     function toggleDarkMode() {
       document.body.classList.toggle('dark-mode');
